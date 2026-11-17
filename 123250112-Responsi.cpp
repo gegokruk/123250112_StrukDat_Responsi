@@ -9,7 +9,7 @@ void judulNama(){
     cout << " |                                   |" << endl;
     cout << " |       Nama : Gega Ramadhan        |" << endl;
     cout << " |       NIM  : 123250112            |" << endl;
-    cout << " |___________________________________|" << endl;
+    cout << " |___________________________________|\n" << endl;
 }
 
 void judul(string judul){
@@ -22,19 +22,19 @@ void jeda(){
 }
 
 struct nodeQueue {
-    int nota;
+    int kodeEnergi;
     string nama;
     nodeQueue* next;
 };
 
 struct nodeStack{
-    int nota;
+    int kodeEnergi;
     string nama;
     nodeStack *next;
 };
 
 struct nodeTree {
-    int nota;
+    int kodeEnergi;
     string nama;
     nodeTree* kiri;
     nodeTree* kanan;
@@ -45,50 +45,50 @@ nodeQueue* last = NULL;
 nodeStack* top = NULL;
 nodeTree* root = NULL;
 
-nodeTree* tambah_tree(nodeTree* akar, int nota, string nama){
+nodeTree* tambah_tree(nodeTree* akar, int kodeEnergi, string nama){
     if (akar == NULL){
         nodeTree* simpulBaru  = new nodeTree;
-        simpulBaru->nota = nota;
+        simpulBaru->kodeEnergi = kodeEnergi;
         simpulBaru->nama = nama;
         simpulBaru->kiri = NULL;
         simpulBaru->kanan = NULL;
         return simpulBaru;
     }
 
-    if (nota < akar->nota){
-        akar->kiri = tambah_tree(akar->kiri, nota, nama);
-    } else if (nota > akar->nota) {
-        akar->kanan = tambah_tree(akar->kanan, nota, nama);
+    if (kodeEnergi < akar->kodeEnergi){
+        akar->kiri = tambah_tree(akar->kiri, kodeEnergi, nama);
+    } else if (kodeEnergi > akar->kodeEnergi) {
+        akar->kanan = tambah_tree(akar->kanan, kodeEnergi, nama);
     }
 
     return akar;
 }
 
-nodeTree* cari_tree(nodeTree* akar, int nota){
+nodeTree* cari_tree(nodeTree* akar, int kodeEnergi){
     if (akar == NULL){
         return NULL;
     }
 
-    if (akar->nota == nota){
+    if (akar->kodeEnergi == kodeEnergi){
         return akar;
     }
 
-    if(nota < akar->nota){
-        return cari_tree(akar->kiri, nota);
+    if(kodeEnergi < akar->kodeEnergi){
+        return cari_tree(akar->kiri, kodeEnergi);
     } else {
-        return cari_tree(akar->kanan, nota);
+        return cari_tree(akar->kanan, kodeEnergi);
     }
 }
 
-nodeTree* hapus_tree(nodeTree* akar, int nota){
+nodeTree* hapus_tree(nodeTree* akar, int kodeEnergi){
     if (akar == NULL){
         return NULL;
     }
 
-    if (nota < akar->nota){
-        akar->kiri = hapus_tree(akar->kiri, nota);
-    } else if (nota > akar->nota){
-        akar->kanan = hapus_tree(akar->kanan, nota);
+    if (kodeEnergi < akar->kodeEnergi){
+        akar->kiri = hapus_tree(akar->kiri, kodeEnergi);
+    } else if (kodeEnergi > akar->kodeEnergi){
+        akar->kanan = hapus_tree(akar->kanan, kodeEnergi);
     } else {
         if (akar->kiri == NULL && akar->kanan == NULL){
             delete akar;
@@ -106,9 +106,9 @@ nodeTree* hapus_tree(nodeTree* akar, int nota){
             while (pengganti->kiri != NULL){
                 pengganti = pengganti->kiri;
             }
-            akar->nota = pengganti->nota;
+            akar->kodeEnergi = pengganti->kodeEnergi;
             akar->nama = pengganti->nama;
-            akar->kanan = hapus_tree(akar->kanan, pengganti->nota);
+            akar->kanan = hapus_tree(akar->kanan, pengganti->kodeEnergi);
         }
     }
     return akar;
@@ -118,7 +118,7 @@ void preorder(nodeTree* akar, int& no){
     if (akar == NULL){
         return;
     }
-    cout << " [" << no << "] Kode Energi : " << akar->nota << endl;
+    cout << " [" << no << "] Kode Energi : " << akar->kodeEnergi << endl;
     cout << "    Nama Energi : " << akar->nama << endl;
     no++;
     preorder(akar->kiri, no);
@@ -130,7 +130,7 @@ void inorder(nodeTree* akar, int& no){
         return;
     }
     inorder(akar->kiri, no);
-    cout << " [" << no << "] Kode Energi : " << akar->nota << endl;
+    cout << " [" << no << "] Kode Energi : " << akar->kodeEnergi << endl;
     cout << "    Nama Energi : " << akar->nama << endl;
     no++;
     inorder(akar->kanan, no);
@@ -142,7 +142,7 @@ void postorder(nodeTree* akar, int& no){
     }
     postorder(akar->kiri, no);
     postorder(akar->kanan, no);
-    cout << " [" << no << "] Kode Energi : " << akar->nota << endl;
+    cout << " [" << no << "] Kode Energi : " << akar->kodeEnergi << endl;
     cout << "    Nama Energi : " << akar->nama << endl;
     no++;
 }
@@ -162,7 +162,7 @@ void tambahEnergi(){
     
     nodeQueue* queueTemp = front;
     while (queueTemp != NULL){
-        if (queueTemp->nota == kode){
+        if (queueTemp->kodeEnergi == kode){
             cout << "\n [!] Nomor Kode Sudah Ada..." << endl;
             return;
         }
@@ -171,7 +171,7 @@ void tambahEnergi(){
 
     nodeStack* stackTemp = top;
     while (stackTemp != NULL){
-        if (stackTemp->nota == kode){
+        if (stackTemp->kodeEnergi == kode){
             cout << "\n [!] Nomor Kode Sudah Ada..." << endl;
             return;
         }
@@ -187,7 +187,7 @@ void tambahEnergi(){
     }
 
     nodeQueue* nb = new nodeQueue;
-    nb->nota = kode;
+    nb->kodeEnergi = kode;
     nb->nama = namaEnergi;
     nb->next = NULL;;
 
@@ -212,7 +212,7 @@ void lihat_antrean(){
     int no = 1;
     cout << "\n [Daftar Antrean]===============" << endl;
     while (temp != NULL){
-        cout << " [" << no << "] Kode Energi : " << temp->nota << endl;
+        cout << " [" << no << "] Kode Energi : " << temp->kodeEnergi << endl;
         cout << "     Nama Energi : " << temp->nama << endl;
         cout << " -----------------------------" << endl;
         temp = temp->next;
@@ -233,12 +233,12 @@ void prosesEnergi(){
     nodeQueue* hapus = front;
     nodeStack* nodeRiwayat = new nodeStack;
 
-    nodeRiwayat->nota = hapus->nota;
+    nodeRiwayat->kodeEnergi = hapus->kodeEnergi;
     nodeRiwayat->nama = hapus->nama;
     nodeRiwayat->next = top;
     top = nodeRiwayat;
 
-    root = tambah_tree(root, hapus->nota, hapus->nama);
+    root = tambah_tree(root, hapus->kodeEnergi, hapus->nama);
     cout << "\n [SUKSES] Berhasil memproses Energi..." << endl;
 
     front = front->next;
@@ -262,7 +262,7 @@ void lihatRiwayat(){
     int no = 1;
     cout << "\n [Daftar Energi Terserap]========== " << endl;
     while (temp != NULL){
-        cout << " [" << no <<"] Kode Energi : " << temp->nota << endl;
+        cout << " [" << no <<"] Kode Energi : " << temp->kodeEnergi << endl;
         cout << "     Nama Energi : " << temp->nama << endl;
         cout << " ----------------------------------" << endl;
         temp = temp->next;
@@ -282,7 +282,7 @@ void hapusRiwayatAtas(){
     nodeStack* temp = top;
 
     cout << "\n [Data Energi Teratas]========== " << endl;
-    cout << " [>] Kode Energi : " << temp->nota << endl;
+    cout << " [>] Kode Energi : " << temp->kodeEnergi << endl;
     cout << " [>] Nama Energi : " << temp->nama << endl;
     cout << " --------------------------------" << endl;
     
@@ -318,7 +318,7 @@ void cariEnergi(){
         cout << "\n [!] Energi dengan Kode " << nomorKode << "Tidak Ditemukan";
     } else {
         cout << "\n [Data Ditemukan]==========" << endl;
-        cout << " [>] Kode   : " << hasil->nota << endl;
+        cout << " [>] Kode   : " << hasil->kodeEnergi << endl;
         cout << " [>] Energi : " << hasil->nama << endl;
         cout << " ==========================" << endl;
     }
@@ -403,7 +403,7 @@ void gunakanEnergi(){
     }
 
     cout << "\n [Data Energi Digunakan]==========" << endl;
-    cout << " [>] Kode Energi : " << temp->nota << endl;
+    cout << " [>] Kode Energi : " << temp->kodeEnergi << endl;
     cout << " [>] Nama Energi : " << temp->nama << endl;
     cout << "\n [SUKSES] Menggunakan Energi";
     root = hapus_tree(root, kodeEnergi);
